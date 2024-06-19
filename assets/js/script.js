@@ -33,17 +33,37 @@ const addEventOnElements = function (elements, eventType, callback) {
  * NAVBAR
  */
 
+// Selecting necessary DOM elements
 const navbar = document.querySelector("[data-navbar]");
 const navTogglers = document.querySelectorAll("[data-nav-toggler]");
 const overlay = document.querySelector("[data-overlay]");
+const navOpenBtn = document.querySelector(".nav-open-btn");
+const navLinks = document.querySelectorAll(".navbar-link");
 
-const toggleNavbar = function () {
+// Function to toggle navigation visibility
+const toggleNavbar = () => {
   navbar.classList.toggle("active");
   overlay.classList.toggle("active");
   document.body.classList.toggle("nav-active");
-}
+  if (navOpenBtn) {
+    navOpenBtn.classList.toggle("open");
+  }
+};
 
-addEventOnElements(navTogglers, "click", toggleNavbar);
+// Add event listeners to all elements that should toggle the navigation
+navTogglers.forEach(toggler => {
+  toggler.addEventListener("click", toggleNavbar);
+});
+
+// Add event listeners to all navigation links to close the navbar when clicked
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    if (navbar.classList.contains("active")) {
+      toggleNavbar();
+    }
+  });
+});
+
 
 
 
